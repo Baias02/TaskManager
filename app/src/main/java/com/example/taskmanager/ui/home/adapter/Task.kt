@@ -1,4 +1,4 @@
-package com.example.taskmanager.ui
+package com.example.taskmanager.ui.home.adapter
 
 import java.io.Serializable
 

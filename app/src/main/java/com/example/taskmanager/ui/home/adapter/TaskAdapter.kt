@@ -1,19 +1,25 @@
-package com.example.taskmanager.ui.home
+package com.example.taskmanager.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.databinding.ItemTaskBinding
-import com.example.taskmanager.ui.Task
 
-class TaskAdapter(val list: ArrayList<Task>): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskAdapter.TaskViewHolder {
+    private val list: ArrayList<Task> = arrayListOf()
+
+   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun onBindViewHolder(holder: TaskAdapter.TaskViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.onBind()
+    }
+
+    fun addData(task: Task){
+        list.add(0,task)
+        notifyItemChanged(0)
     }
 
     override fun getItemCount(): Int {

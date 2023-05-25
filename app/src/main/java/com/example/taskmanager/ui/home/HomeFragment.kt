@@ -11,7 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentHomeBinding
 import com.example.taskmanager.databinding.ItemTaskBinding
-import com.example.taskmanager.ui.Task
+import com.example.taskmanager.ui.home.adapter.Task
+import com.example.taskmanager.ui.home.adapter.TaskAdapter
 import com.example.taskmanager.ui.model.TaskFragment
 
 class HomeFragment : Fragment() {
@@ -24,6 +25,11 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: TaskAdapter
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = TaskAdapter()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,26 +39,18 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
         }
 
-        adapter = TaskAdapter(list)
         binding.recyclerview.adapter = adapter
 
         setFragmentResultListener(TaskFragment.RESULT_TITLE) { key, bundle ->
             val data = bundle.getSerializable(TaskFragment.RESULT_DESC) as Task
-            list.add(data)
-            adapter.notifyDataSetChanged()
+            adapter.addData(data)
 
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
