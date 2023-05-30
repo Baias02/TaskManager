@@ -1,8 +1,7 @@
-package com.example.taskmanager.ui.data.local
+package com.example.taskmanager.data.local
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.net.Uri
 
 class Pref(context: Context) {
     private val pref = context.getSharedPreferences(SHARED_NAME, MODE_PRIVATE)

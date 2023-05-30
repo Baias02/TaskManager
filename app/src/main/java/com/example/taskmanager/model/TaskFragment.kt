@@ -1,15 +1,14 @@
-package com.example.taskmanager.ui.model
+package com.example.taskmanager.model
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
+import com.example.taskmanager.App
 import com.example.taskmanager.databinding.FragmentTaskBinding
-import com.example.taskmanager.ui.home.adapter.Task
+import com.example.taskmanager.data.Task
 
 class TaskFragment : Fragment() {
      private lateinit var binding: FragmentTaskBinding
@@ -26,15 +25,12 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
             save.setOnClickListener {
-                val data = Task(etTitle.text.toString(), etDesc.text.toString())
-                setFragmentResult(RESULT_TITLE, bundleOf(RESULT_DESC to data))
+                val data = Task(
+                    title = etTitle.text.toString(),
+                    desc = etDesc.text.toString())
+                App.db.dao().insert(data)
                 findNavController().navigateUp()
             }
         }
-    }
-
-    companion object{
-        const val RESULT_TITLE = "title_key"
-        const val RESULT_DESC = "desc_key"
     }
 }
