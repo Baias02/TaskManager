@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.taskmanager.data.Task
+import com.example.taskmanager.model.Task
 
 @Dao
 interface TaskDao {

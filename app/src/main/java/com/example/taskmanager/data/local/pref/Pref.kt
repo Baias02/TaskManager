@@ -1,4 +1,4 @@
-package com.example.taskmanager.data.local
+package com.example.taskmanager.data.local.pref
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

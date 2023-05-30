@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.App
 import com.example.taskmanager.R
-import com.example.taskmanager.data.Task
+import com.example.taskmanager.model.Task
 import com.example.taskmanager.databinding.FragmentHomeBinding
 import com.example.taskmanager.ui.home.adapter.TaskAdapter
 
@@ -37,23 +37,30 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapterRecyc()
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.taskFragment)
-        }
+        setClickFab()
+        setAdapter()
+    }
+
+    private fun setAdapter() {
         val tasks = App.db.dao().getAll()
         adapter.addTasks(tasks)
     }
 
+    private fun setClickFab() {
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.taskFragment)
+        }
+    }
+
     private fun longClick(task: Task) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Удаление данных")
-            .setMessage("Вы хотите удалить этот таск?")
-            .setPositiveButton("Да") { _, _ ->
+            .setTitle(getString(R.string.Delete_Title))
+            .setMessage(getString(R.string.Delete_Desc))
+            .setPositiveButton(getString(R.string.Text_Da)) { _, _ ->
                 App.db.dao().delete(task)
-                val list = App.db.dao().getAll()
-                adapter.addTasks(list)
+                setAdapter()
             }
-            .setNegativeButton("Нет") { dialog, _ ->
+            .setNegativeButton(getString(R.string.Text_No)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

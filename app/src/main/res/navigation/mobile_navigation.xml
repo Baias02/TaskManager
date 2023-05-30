@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.example.taskmanager.model.TaskFragment"
+        android:name="com.example.taskmanager.ui.home.TaskFragment"
         android:label="Task"
         tools:layout="@layout/fragment_task" />
     <fragment

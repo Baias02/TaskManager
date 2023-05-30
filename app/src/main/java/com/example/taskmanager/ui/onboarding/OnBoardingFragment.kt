@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.taskmanager.data.local.Pref
+import com.example.taskmanager.data.local.pref.Pref
 import com.example.taskmanager.databinding.FragmentOnBoardingBinding
 import com.example.taskmanager.ui.onboarding.adapter.OnBoardingAdapter
 
@@ -19,7 +19,7 @@ class OnBoardingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOnBoardingBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,4 +39,5 @@ class OnBoardingFragment : Fragment() {
         pref.userSeen()
         findNavController().navigateUp()
     }
+
 }

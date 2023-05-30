@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskmanager.databinding.ItemOnboardBinding
+import com.example.taskmanager.model.OnBoard
 import com.example.taskmanager.ui.util.loadImage
 
 class OnBoardingAdapter(private val onClick:() -> Unit): Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
@@ -26,15 +27,15 @@ class OnBoardingAdapter(private val onClick:() -> Unit): Adapter<OnBoardingAdapt
 
     override fun getItemCount() = data.size
 
-
-
     inner class OnBoardingViewHolder(private val binding: ItemOnboardBinding): ViewHolder(binding.root){
         fun onBind(onBoard: OnBoard) {
             with(binding){
+
                 text1Onboard.text = onBoard.title
                 text2Onboard.text= onBoard.subTitle
-                btvOnboard.isVisible = adapterPosition == data.lastIndex
                 ivOnboard.loadImage(onBoard.image)
+
+                btvOnboard.isVisible = adapterPosition == data.lastIndex
 
                 btvOnboard.setOnClickListener{
                     onClick()
@@ -42,4 +43,5 @@ class OnBoardingAdapter(private val onClick:() -> Unit): Adapter<OnBoardingAdapt
             }
         }
     }
+
 }

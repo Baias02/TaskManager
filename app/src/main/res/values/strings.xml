@@ -11,4 +11,8 @@
     <string name="text">TEXT</string>
     <string name="get_started">Get Started</string>
     <string name="save">Сохранить</string>
+    <string name="Delete_Title">Удаление данных</string>
+    <string name="Delete_Desc">Вы хотите удалить этот таск?</string>
+    <string name="Text_Da">Да</string>
+    <string name="Text_No">Нет</string>
 </resources>

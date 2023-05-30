@@ -3,10 +3,10 @@ package com.example.taskmanager.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskmanager.data.Task
 import com.example.taskmanager.databinding.ItemTaskBinding
+import com.example.taskmanager.model.Task
 
-class TaskAdapter(private val itemClick: (Task) -> Unit) :
+class TaskAdapter(private val onLongClick: (Task) -> Unit) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val list: ArrayList<Task> = arrayListOf()
@@ -28,22 +28,24 @@ class TaskAdapter(private val itemClick: (Task) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.onBind()
+        holder.onBind(list[position])
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    inner class TaskViewHolder(val binding: ItemTaskBinding) :
+    inner class TaskViewHolder(var binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind() {
+        fun onBind(item: Task) {
             with(binding) {
-                val item = list[adapterPosition]
+
                 textTitle.text = item.title
                 textDesc.text = item.desc
-                itemView.setOnClickListener {
-                    itemClick(list[adapterPosition])
+
+                itemView.setOnLongClickListener {
+                    onLongClick(item)
+                    false
                 }
             }
         }

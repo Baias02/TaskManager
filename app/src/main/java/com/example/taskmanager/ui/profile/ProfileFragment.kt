@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.example.taskmanager.data.local.Pref
+import com.example.taskmanager.data.local.pref.Pref
 import com.example.taskmanager.databinding.FragmentProfileBinding
 import com.example.taskmanager.ui.util.loadImage
 

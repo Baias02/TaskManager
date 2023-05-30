@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.ActivityMainBinding
-import com.example.taskmanager.data.local.Pref
+import com.example.taskmanager.data.local.pref.Pref
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
