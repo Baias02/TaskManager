@@ -8,8 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.taskmanager.R
-import com.example.taskmanager.databinding.ActivityMainBinding
 import com.example.taskmanager.data.local.pref.Pref
+import com.example.taskmanager.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -25,25 +25,25 @@ class MainActivity : AppCompatActivity() {
         pref = Pref(this)
         bottomNavigate()
     }
-    private fun bottomNavigate(){
+
+    private fun bottomNavigate() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         if (!pref.isUserSeen()) {
             navController.navigate(R.id.onBoardingFragment)
         }
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
                 R.id.navigation_notifications,
-                R.id.taskFragment,
                 R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.onBoardingFragment) {
                 navView.isVisible = false

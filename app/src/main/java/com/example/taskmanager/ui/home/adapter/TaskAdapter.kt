@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.databinding.ItemTaskBinding
 import com.example.taskmanager.model.Task
 
-class TaskAdapter(private val onLongClick: (Task) -> Unit) :
+class TaskAdapter(
+    private val onLongClick: (Task) -> Unit,
+    private val onClick: (Task) -> Unit
+) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val list: ArrayList<Task> = arrayListOf()
@@ -24,6 +27,9 @@ class TaskAdapter(private val onLongClick: (Task) -> Unit) :
     fun addTasks(tasks: List<Task>) {
         list.clear()
         list.addAll(tasks)
+        list.sortByDescending { result ->
+            result.id
+        }
         notifyDataSetChanged()
     }
 
@@ -46,6 +52,10 @@ class TaskAdapter(private val onLongClick: (Task) -> Unit) :
                 itemView.setOnLongClickListener {
                     onLongClick(item)
                     false
+                }
+
+                itemView.setOnClickListener {
+                    onClick(item)
                 }
             }
         }
