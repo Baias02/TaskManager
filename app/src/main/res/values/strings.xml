@@ -16,4 +16,6 @@
     <string name="Text_Da">Да</string>
     <string name="Text_No">Нет</string>
     <string name="update">UPDATE</string>
+    <string name="text_update">Update</string>
+    <string name="text_save">Save</string>
 </resources>

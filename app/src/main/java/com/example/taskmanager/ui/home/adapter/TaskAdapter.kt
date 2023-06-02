@@ -27,9 +27,6 @@ class TaskAdapter(
     fun addTasks(tasks: List<Task>) {
         list.clear()
         list.addAll(tasks)
-        list.sortByDescending { result ->
-            result.id
-        }
         notifyDataSetChanged()
     }
 

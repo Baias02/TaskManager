@@ -70,11 +70,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClick(task: Task) {
-        findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTaskFragment(task))
+        findNavController().navigate(R.id.taskFragment, bundleOf(UPDATE_KEY to task))
     }
 
     companion object {
         const val UPDATE_KEY = "update_key"
-        const val UPDATE_RESULT = "result_key"
     }
 }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.App
+import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskBinding
 import com.example.taskmanager.model.Task
 import com.example.taskmanager.ui.util.showToast
@@ -15,7 +15,6 @@ import com.example.taskmanager.ui.util.showToast
 class TaskFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskBinding
-    private lateinit var navArgs: TaskFragmentArgs
     private var task: Task? = null
 
     override fun onCreateView(
@@ -29,46 +28,46 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getData()
         initData()
+        binding.save.setOnClickListener {
+            if (binding.save.text.equals(getString(R.string.text_update))) {
+                onUpdate()
+            } else onSave()
+        }
     }
 
-    private fun getData() {
-        arguments.let {
-            navArgs = it?.let { it1 -> TaskFragmentArgs.fromBundle(it1) }!!
-            task = navArgs.task
-        }
-
-        if (task != null) {
-            binding.etTitle.setText(task!!.title)
-            binding.etDesc.setText(task!!.desc)
-            binding.save.text = "Update"
+    private fun onUpdate() {
+        val result = task?.copy(
+            title = binding.etTitle.text.toString(),
+            desc = binding.etDesc.text.toString()
+        )
+        if (binding.etTitle.text.isNotEmpty() && binding.etDesc.text.isNotEmpty()) {
+            App.db.dao().update(result!!)
+            findNavController().navigateUp()
         } else {
-            binding.save.text = "Save"
+            showToast("\"Title & desc не могут быть пусты\"")
+        }
+    }
+
+    private fun onSave() {
+        val result = Task(
+            title = binding.etTitle.text.toString(),
+            desc = binding.etDesc.text.toString()
+        )
+        if (binding.etTitle.text.isNotEmpty() && binding.etDesc.text.isNotEmpty()) {
+            App.db.dao().insert(result)
+            findNavController().navigateUp()
+        } else {
+            showToast("\"Title & desc не могут быть пусты\"")
         }
     }
 
     private fun initData() {
-        binding.save.setOnClickListener {
-            val data = Task(
-                title = binding.etTitle.text.toString(),
-                desc = binding.etDesc.text.toString()
-            )
-            if (!data.title?.isEmpty()!! && !data.desc?.isEmpty()!!) {
-            }else{
-                showToast("\"Title & desc не могут быть пусты\"")
-                return@setOnClickListener
-            }
-
-            if (task != null) {
-                task!!.title = data.title
-                task!!.desc = data.desc
-                App.db.dao().update(task!!)
-            } else {
-                task = Task(title = data.title, desc = data.desc)
-                App.db.dao().insert(task!!)
-            }
-            findNavController().navigateUp()
+        task = arguments?.getSerializable(HomeFragment.UPDATE_KEY) as Task?
+        task?.let {
+            binding.save.text = getString(R.string.text_update)
+            binding.etTitle.setText(task?.title)
+            binding.etDesc.setText(task?.desc)
         }
     }
 }
