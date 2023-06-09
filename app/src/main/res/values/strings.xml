@@ -18,4 +18,6 @@
     <string name="update">UPDATE</string>
     <string name="text_update">Update</string>
     <string name="text_save">Save</string>
+    <string name="hint_title">Title\n</string>
+    <string name="hint_desc">Description</string>
 </resources>

@@ -11,6 +11,7 @@ import com.example.taskmanager.R
 import com.example.taskmanager.data.local.pref.Pref
 import com.example.taskmanager.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,31 +35,36 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.onBoardingFragment)
         }
 
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            navController.navigate(R.id.authFragment)
+        }
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
                 R.id.navigation_notifications,
-                R.id.navigation_profile
-
+                R.id.navigation_profile,
+                R.id.taskFragment
             )
         )
 
-        val bottomNavFragments = setOf(
-            R.id.navigation_home,
-            R.id.navigation_dashboard,
-            R.id.navigation_notifications,
-            R.id.navigation_profile
-        )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        val fragmentsWithoutBar = listOf(
+            R.id.taskFragment,
+            R.id.onBoardingFragment,
+            R.id.authFragment
+        )
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            navView.isVisible = bottomNavFragments.contains(destination.id)
-            if (destination.id == R.id.onBoardingFragment) {
-            supportActionBar?.hide()
-        } else {
-            supportActionBar?.show()
-        }
+            if (fragmentsWithoutBar.contains(destination.id)) {
+                navView.isVisible = false
+                supportActionBar?.hide()
+            }else{
+                navView.isVisible = true
+                supportActionBar?.show()
+            }
         }
     }
 }

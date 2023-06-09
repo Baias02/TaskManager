@@ -1,15 +1,12 @@
 package com.example.taskmanager.data.local.db
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.taskmanager.model.Task
 
 @Dao
 interface TaskDao {
-    @Query("SELECT*FROM task ORDER BY id DESC")
+
+    @Query("SELECT*FROM task")
     fun getAll(): List<Task>
 
     @Insert
@@ -20,5 +17,4 @@ interface TaskDao {
 
     @Update
     fun update(task: Task)
-
 }
